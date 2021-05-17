@@ -1,0 +1,97 @@
+$ docker build . -t app-receiver
+#1 [internal] load build definition from Dockerfile
+#1 sha256:10a1df017bd7ef2985576267d80c0659ca87f0a6b7358f670c808821bb0b464f
+#1 transferring dockerfile: 32B done
+#1 DONE 0.1s
+
+#2 [internal] load .dockerignore
+#2 sha256:9c26f69828a66a657d320d1ad8bb1a907fb3a473c5ea21889c092a8a1dafb409
+#2 transferring context: 35B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3
+#3 sha256:659a837a58aa562a3c6a6b5c53816b5d57a6ee4f80575a2e3ee1f7e1a5483b44
+#3 ...
+
+#4 [auth] library/python:pull token for registry-1.docker.io
+#4 sha256:ac74aeb0a2f5df05e379716a5025fce3dff8f3449bc5ab470f3ea7548c9b21f0
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3
+#3 sha256:659a837a58aa562a3c6a6b5c53816b5d57a6ee4f80575a2e3ee1f7e1a5483b44
+#3 DONE 2.5s
+
+#5 [1/6] FROM docker.io/library/python:3@sha256:f265c5096aa52bdd478d2a5ed097727f51721fda20686523ab1b3038cc7d6417
+#5 sha256:2afa4c2a463458de359e70e9628d0abc63f52d8ce37082ae2c85163fe779db89
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 sha256:43539103f51e8e670219f3ad499ef796e3fa809fef8d3ad0fe237691d9c70ba8
+#6 transferring context: 62B done
+#6 DONE 0.1s
+
+#7 [2/6] COPY Pipfile ./
+#7 sha256:022769a9c621ef1f6dea9010ce11c62fa0fdd95ff69bcb292dea2b7bd42643e6
+#7 CACHED
+
+#8 [3/6] COPY Pipfile.lock ./
+#8 sha256:a85f31c80d8a7c3a762bd098d303a84a63f85dace086c6778e8307eb6a1aecc1
+#8 CACHED
+
+#9 [4/6] RUN mkdir -p /usr/src/app-receiver/output
+#9 sha256:b121031d10f8857e7acc126165f5c25d25d4ca68c8fd591075e1fdb95cd72233
+#9 CACHED
+
+#10 [5/6] RUN pip install --no-cache-dir pipenv
+#10 sha256:b3afb82513e6c403803b097021dc7590c6876a46aed8fb9b7247a6973c2b80ae
+#10 CACHED
+
+#11 [6/6] RUN pipenv install --system --deploy --ignore-pipfile
+#11 sha256:34f9e827dc3915676e402482028e38b8fc30a5e97dad62bef1a2908ebad51f13
+#11 CACHED
+
+#12 exporting to image
+#12 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+#12 exporting layers done
+#12 writing image sha256:de844552d348a62fa864bc7c2f4177be1ed842bac4872460bac7637a1c8be1f8 done
+#12 naming to docker.io/library/app-receiver done
+#12 DONE 0.1s
+
+esodama@IN-00209371 MINGW64 ~/Downloads/devops-assignment-python-and-docker-main/app-receiver (master)
+$ docker images
+REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
+app-receiver             latest    de844552d348   58 minutes ago   945MB
+docker/getting-started   latest    3ba8f2ff0727   8 weeks ago      27.9MB
+
+===============================================================================================================
+$ docker run --rm app-receiver:latest
+[2021-05-16 10:46:52 +0000] [1] [INFO] Starting gunicorn 20.1.0
+[2021-05-16 10:46:52 +0000] [1] [INFO] Listening at: http://127.0.0.1:8000 (1)
+[2021-05-16 10:46:52 +0000] [1] [INFO] Using worker: sync
+[2021-05-16 10:46:52 +0000] [7] [INFO] Booting worker with pid: 7
+[2021-05-16 10:46:52 +0000] [7] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/arbiter.py", line 589, in spawn_worker
+    worker.init_process()
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/local/lib/python3.9/site-packages/gunicorn/util.py", line 359, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/local/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 984, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'server'
+[2021-05-16 10:46:52 +0000] [7] [INFO] Worker exiting (pid: 7)
+[2021-05-16 10:46:52 +0000] [1] [INFO] Shutting down: Master
+[2021-05-16 10:46:52 +0000] [1] [INFO] Reason: Worker failed to boot.
+==============================================================================================================
