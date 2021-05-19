@@ -57,7 +57,7 @@ $ docker build . -t app-receiver
 #12 naming to docker.io/library/app-receiver done
 #12 DONE 0.1s
 
-esodama@IN-00209371 MINGW64 ~/Downloads/devops-assignment-python-and-docker-main/app-receiver (master)
+~/Downloads/devops-assignment-python-and-docker-main/app-receiver (master)
 $ docker images
 REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
 app-receiver             latest    de844552d348   58 minutes ago   945MB
